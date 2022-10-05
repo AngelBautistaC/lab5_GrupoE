@@ -34,17 +34,16 @@ public class EmployeeController {
 
 
     //Editar Empleado
-    @GetMapping("/informEmployee")
-    public String informEmployee(@ModelAttribute("employee") @Valid Employee employee, @RequestParam("id") int id, Model model) {
+    @GetMapping("/info")
+    public String informEmployee(@ModelAttribute("employee") Employee employee, @RequestParam("id") int id, Model model) {
         Optional<Employee> optEmployee = employeeRepository.findById(id);
-        return "employee/datos";
-    }
-
-    //Guardar Empleado
-    //@...Mapping("")
-    public String saveEmployee(  ) {
-        //        COMPLETAR
-        return "XXXXXX";
+        if(optEmployee.isPresent()){
+            employee = optEmployee.get();
+            model.addAttribute("employee", employee);
+            return "employee/datos";
+        }else{
+            return "redirect:employee/lista";
+        }
     }
 
     //Nuevo Empleado
@@ -54,9 +53,9 @@ public class EmployeeController {
         return "XXXXXX";
     }
     //Guardar empleado
-    @GetMapping ("/saveEmployee")
-    public String saveEmployee(Model model) {
+    @PostMapping ("/saveEmployee")
+    public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee) {
         //        COMPLETAR
-        return "XXXXXX";
+        return "redirect:employee/lista";
     }
 }
