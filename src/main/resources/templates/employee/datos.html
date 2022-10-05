@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap CSS -->
     <title>Title</title>
 </head>
 <body>
@@ -24,36 +30,58 @@
                 <input type="hidden" name="employeeId" id="employeeId" th:value="${employee.id}">
                 <div class="form-group">
                     <label for="firstName">Nombre</label>
-                    <input type="text" class="form-control disabled" name="firstName" th:field="${employee.firstName}" id="firstName">
+                    <input type="text" class="form-control disabled" name="firstName" th:field="${employee.firstName}" id="firstName"
+                           th:classappend="${#fields.hasErrors('employee.firstName')?'is-invalid':''}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('employee.firstName')}"
+                         th:errors="${employee.firstName}">
+                        Please choose a username.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="lastName">Apellido</label>
-                    <input type="text" class="form-control disabled" name="lastName" id="lastName" th:field="${employee.lastName}">
+                    <input type="text" class="form-control disabled" name="lastName" id="lastName" th:field="${employee.lastName}"
+                           th:classappend="${#fields.hasErrors('employee.lastName')?'is-invalid':''}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('employee.lastName')}"
+                         th:errors="${employee.lastName}">
+                        Please choose a username.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="email">Correo</label>
-                    <input type="text" class="form-control disabled" name="email" id="email" th:field="${employee.email}">
+                    <input type="text" class="form-control disabled" name="email" id="email" th:field="${employee.email}"
+                           th:classappend="${#fields.hasErrors('employee.email')?'is-invalid':''}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('employee.email')}"
+                         th:errors="${employee.email}">
+                        Please choose a username.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="departmentId">Departamento</label>
                     <select class="form-control" name="departmentId" id="departmentId" th:field="${employee.department}">
-                        <option>-Seleccionar-</option>
+                        <option th:each="department : ${listaDepartamentos}" th:text="${department.departmentName}"
+                                th:value="${department.id}">-Seleccionar-</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="jobId">Trabajo</label>
                     <select class="form-control" name="jobId" id="jobId" th:field="${employee.job}">
-                        <option>-Seleccionar-</option>
+                        <option th:each="job : ${listaTrabajos}" th:text="${job.jobTitle}"
+                                th:value="${job.id}">-Seleccionar-</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="salary">Salario</label>
-                    <input type="text" class="form-control disabled" name="salary" id="salary" th:field="${employee.salary}">
+                    <input type="text" class="form-control disabled" name="salary" id="salary" th:field="${employee.salary}"
+                           th:classappend="${#fields.hasErrors('employee.salary')?'is-invalid':''}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('employee.salary')}"
+                         th:errors="${employee.salary}">
+                        Please choose a username.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <div class="controls">
-                        <a class="btn btn-primary" th:href="@{'/employee/listEmployee'}">Cancelar</a>&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" th:href="@{'/empleado/lista'}">Cancelar</a>&nbsp;&nbsp;&nbsp;
                         <button type="submit" class="btn btn-outline-secondary">Guardar</button>
                     </div>
                 </div>
