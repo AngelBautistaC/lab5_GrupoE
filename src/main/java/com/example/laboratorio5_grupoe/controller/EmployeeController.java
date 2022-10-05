@@ -48,7 +48,14 @@ public class EmployeeController {
     }
 
     //Nuevo Empleado
+    @GetMapping("/newEmployee")
     public String newEmployee(Model model) {
+        //        COMPLETAR
+        return "XXXXXX";
+    }
+    //Guardar empleado
+    @GetMapping ("/saveEmployee")
+    public String saveEmployee(Model model) {
         //        COMPLETAR
         return "XXXXXX";
     }
