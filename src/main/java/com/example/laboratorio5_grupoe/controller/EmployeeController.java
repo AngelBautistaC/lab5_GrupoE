@@ -8,15 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import java.util.Optional;
+
 import java.util.List;
 
 @Controller
-@RequestMapping(value = {"/empleado"})
+@RequestMapping("/empleado")
 public class EmployeeController {
-
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+
 
     @GetMapping({"lista", ""})
     public String listEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
@@ -39,10 +43,10 @@ public class EmployeeController {
 
 
     //Editar Empleado
-    //@...Mapping("")
-    public String informEmployee(  ) {
-        //        COMPLETAR
-        return "XXXXXX";
+    @GetMapping("/informEmployee")
+    public String informEmployee(@ModelAttribute("employee") @Valid Employee employee, @RequestParam("id") int id, Model model) {
+        Optional<Employee> optEmployee = employeeRepository.findById(id);
+        return "employee/datos";
     }
 
     //Guardar Empleado
