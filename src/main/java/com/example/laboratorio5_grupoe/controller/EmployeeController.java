@@ -83,8 +83,13 @@ public class EmployeeController {
     @PostMapping ("/saveEmployee")
     public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee,
                                BindingResult bindingResult, RedirectAttributes attr) {
-        //        COMPLETAR
-        return "redirect:employee/lista";
+        if(bindingResult.hasErrors()){
+            model.addAttribute("listaEmpleados",employeeRepository.findAll());
+            return "employee/list";
+        }else {
+            employeeRepository.save(employee);
+            return "redirect:employee/lista";
+        }
     }
 }
 
