@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
 <head>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,17 +24,17 @@
                             </a>
                         </div>
                         <div class="card-body">
-                            <form class="row  g-3" method="post">
+                            <form class="row  g-3" method="post" action="post" th:action="@{/procesarLog}">
                                 <div class="form-group">
                                     <label>Usuario:</label>
-                                    <input type="text" class="form-control"/>
+                                    <input name="correo" type="text" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label >Contraseña</label>
-                                    <input type="password" class="form-control"/>
+                                    <input name="password" type="password" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                                    <button type="submit" name="submit" value="submit" class="btn btn-primary btn-block">Ingresar</button>
                                 </div>
                             </form>
                         </div>
