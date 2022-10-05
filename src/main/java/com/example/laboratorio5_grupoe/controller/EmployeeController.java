@@ -106,7 +106,7 @@ public class EmployeeController {
             return "employee/list";
         }else {
             employeeRepository.save(employee);
-            return "redirect:employee/lista";
+            return "redirect:employee/list";
         }
     }
 }
