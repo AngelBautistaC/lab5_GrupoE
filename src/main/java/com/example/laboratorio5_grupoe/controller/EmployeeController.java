@@ -69,7 +69,7 @@ public class EmployeeController {
     @GetMapping("/newEmployee")
     public String newEmployee(@ModelAttribute("employee") Employee employee,Model model, RedirectAttributes attr) {
         model.addAttribute("listJob", jobRepository.findAll());
-        model.addAttribute("listEmploye", employeeRepository.findAll());
+        model.addAttribute("listEmployee", employeeRepository.findAll());
         model.addAttribute("listDepartment", departmentRepository.findAll());
         return "/employee/datos";
     }
