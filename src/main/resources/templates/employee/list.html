@@ -11,9 +11,7 @@
     <title>Lista de Empleados</title>
 
     <style>
-        th {
-            cursor: pointer;
-        }
+
     </style>
 </head>
 <body>
@@ -50,9 +48,10 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre
-                <a class="text-reset"  href="">
-                <span ></span>
-                </a>
+                <form th:action="@{/empleado/sort}" method="post">   <input class="text-reset" type="submit" th:value="${sorted}" th:name="${sorted}" >
+                    <span ></span>
+                    Sort</input></form>
+
                 <a class="text-reset"  href="">
                 <span ></span>
                 </a>
@@ -74,7 +73,7 @@
               <td th:text="${empleado.getSalary()}"></td>
 
 
-              <td><a th:href="@{'/empleado/editar' +'?id='+${empleado.getId()}}" class="btn btn-primary"
+              <td><a th:href="@{'/empleado/info' +'?id='+${empleado.getId()}}" class="btn btn-primary"
               >Editar</a>
               </td>
               <td><a class="btn btn-danger"
@@ -87,20 +86,6 @@
         <script src="<spring:url value="/resources/jquery/jquery-3.3.1.min.js" />"></script>
         <script src="<spring:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
       </div>
-      <script>
-          const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
 
-          const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
-                  v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
-          )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
-
-          // do the work...
-          document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
-              const table = th.closest('table');
-              Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
-                  .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
-                  .forEach(tr => table.appendChild(tr) );
-          })));
-      </script>
 </body>
 </html>
