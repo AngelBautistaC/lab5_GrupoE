@@ -20,7 +20,11 @@ public class EmployeeController {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Autowired
+    EmployeeRepository jobRepository;
 
+    @Autowired
+    EmployeeRepository departmentRepository;
 
     @GetMapping({"lista", ""})
     public String listEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
@@ -57,10 +61,16 @@ public class EmployeeController {
 
     //Nuevo Empleado
     @GetMapping("/newEmployee")
-    public String newEmployee(Model model) {
-        //        COMPLETAR
-        return "XXXXXX";
+    public String newEmployee(@ModelAttribute("employee") Employee employee,Model model) {
+        model.addAttribute("listJob", jobRepository.findAll());
+        model.addAttribute("listEmploye", employeeRepository.findAll());
+        model.addAttribute("listDepartment", departmentRepository.findAll());
+        return "/employee/datos";
     }
+
+
+
+
     //Guardar empleado
     @PostMapping ("/saveEmployee")
     public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee) {
@@ -68,3 +78,5 @@ public class EmployeeController {
         return "redirect:employee/lista";
     }
 }
+
+
