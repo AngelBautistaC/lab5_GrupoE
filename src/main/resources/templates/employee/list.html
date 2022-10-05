@@ -63,7 +63,7 @@
             <td>Apellido</td>
             <td>correo</td>
             <td>salario</td>
-            <td><a class="btn btn-outline-info" href="..." data-toggle="tooltip" data-placement="bottom" title="Editar"></a></td>
+            <td><a class="btn btn-outline-info" th:href="@{'/empleado/info?id=' + ${employee.id}}" data-toggle="tooltip" data-placement="bottom" title="Editar"></a></td>
             <td><a class="btn btn-outline-danger" href="..." data-toggle="tooltip" data-placement="bottom" title="Borrar"></a></td>
           </tr>
 
