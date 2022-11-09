@@ -30,12 +30,14 @@
         <div class="row">
           <div class="col-10"><h2>Lista de Empleados</h2></div>
           <div class="col-2 text-right" >
-            <a class="btn btn-outline-info" href="...">+ Añadir</a>
+            <a class="btn btn-outline-info" th:href="@{'/empleado/newEmployee'}">+ Añadir</a>
           </div>
         </div>
+          <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
 
           <form class="input-group mb-lg-3" method="post" th:action="@{'/empleado/search'}">
-              <input type="text" class="form-control" placeholder="Texto a buscar" name="searchField">
+              <input type="text" class="form-control" placeholder="Texto a buscar" name="searchField" th:value="${searchField}" th:if="${searchField != null}">
+              <input type="text" class="form-control" placeholder="Texto a buscar" name="searchField"  th:if="${searchField == null}">
               <div class="input-group-append">
                   <button class="btn btn-outline-primary ml-2 mr-2" type="submit">Buscar</button>
                   <a th:href="@{'/empleado'}" class="btn btn-outline-danger">Limpiar</a>

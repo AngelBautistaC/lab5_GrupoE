@@ -38,7 +38,7 @@ public class Employee {
 
     @NotNull
     @Column(name = "hire_date", nullable = false)
-    private Instant hireDate;
+    private String hireDate;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -110,11 +110,11 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
-    public Instant getHireDate() {
+    public String getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Instant hireDate) {
+    public void setHireDate(String hireDate) {
         this.hireDate = hireDate;
     }
 

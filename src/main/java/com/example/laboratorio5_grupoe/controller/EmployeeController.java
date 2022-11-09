@@ -1,4 +1,6 @@
 package com.example.laboratorio5_grupoe.controller;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import com.example.laboratorio5_grupoe.entity.Department;
 import com.example.laboratorio5_grupoe.entity.Employee;
@@ -59,10 +61,12 @@ public class EmployeeController {
 
     //Buscar Empleado
     @PostMapping({"search"})
-    public String searchEmployee(Model model, @RequestParam(name = "searchField",required = false) String searchField, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
+    public String searchEmployee(Model model, @RequestParam(name = "searchField",required = false) String searchField,
+                                 @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
 
         List<Employee> listaEmployees=employeeRepository.buscarEmpleado(searchField);
         model.addAttribute("listaEmpleados",listaEmployees);
+        model.addAttribute("searchField",searchField);
 
         return "employee/list";
     }
@@ -77,6 +81,7 @@ public class EmployeeController {
             model.addAttribute("listaDepartamentos",departmentRepository.findAll());
             model.addAttribute("listaTrabajos",jobRepository.findAll());
             model.addAttribute("employee", employee);
+            model.addAttribute("nuevo",0);
             return "employee/datos";
         }else{
             return "redirect:employee/lista";
@@ -86,14 +91,17 @@ public class EmployeeController {
     //Nuevo Empleado
     @GetMapping("/newEmployee")
     public String newEmployee(@ModelAttribute("employee") Employee employee,Model model, RedirectAttributes attr) {
-        model.addAttribute("listJob", jobRepository.findAll());
-        model.addAttribute("listEmployee", employeeRepository.findAll());
-        model.addAttribute("listDepartment", departmentRepository.findAll());
+        model.addAttribute("listaDepartamentos",departmentRepository.findAll());
+        model.addAttribute("listaTrabajos",jobRepository.findAll());
+        model.addAttribute("nuevo",1);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("fechaActual",dtf.format(now));
         return "/employee/datos";
     }
 
 
-    @GetMapping({"empleado/lista", "empleado"})
+    //@GetMapping({"empleado/lista", "empleado"})
 
 
 
@@ -101,12 +109,21 @@ public class EmployeeController {
     @PostMapping ("/saveEmployee")
     public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee,
                                BindingResult bindingResult, RedirectAttributes attr) {
+        System.out.println("########################################aqui estoy gagagagagagag");
         if(bindingResult.hasErrors()){
-            model.addAttribute("listaEmpleados",employeeRepository.findAll());
-            return "employee/list";
+            System.out.println("########################################aqui estoy gagagagagagag 2");
+            System.out.println(bindingResult.getFieldError());
+            model.addAttribute("listaDepartamentos",departmentRepository.findAll());
+            model.addAttribute("listaTrabajos",jobRepository.findAll());
+            return "/employee/datos";
         }else {
+            if (employee.getId() == null) {
+                attr.addFlashAttribute("msg", "Empleado registrado correctamente");
+            } else {
+                attr.addFlashAttribute("msg", "Registro del empleado actualizado");
+            }
             employeeRepository.save(employee);
-            return "redirect:employee/list";
+            return "redirect:/empleado";
         }
     }
 }
