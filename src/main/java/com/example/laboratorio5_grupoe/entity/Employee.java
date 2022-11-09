@@ -1,7 +1,9 @@
 package com.example.laboratorio5_grupoe.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -14,17 +16,16 @@ public class Employee {
     @Column(name = "employee_id", nullable = false)
     private Integer id;
 
-    @Size(max = 20)
-    @Column(name = "first_name", length = 20)
+    @Size(max = 100, min = 3, message = "“El tamaño debe estar entre 3 y 100 caracteres")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Size(max = 25)
-    @NotNull
-    @Column(name = "last_name", nullable = false, length = 25)
+    @Size(max = 100, min = 3, message = "“El tamaño debe estar entre 3 y 100 caracteres")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Size(max = 25)
-    @NotNull
+    @Size(max = 45, message = "El correo no debe tener más de 50 caracteres")
+    @Pattern(regexp="^[\\w-\\.]+@company.com$",message="Formato incorrecto")
     @Column(name = "email", nullable = false, length = 25)
     private String email;
 
@@ -41,6 +42,8 @@ public class Employee {
     private String hireDate;
 
     @NotNull
+    @NotNull
+    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
@@ -55,6 +58,8 @@ public class Employee {
     @JoinColumn(name = "manager_id")
     private Employee manager;
 
+    @NotNull
+    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
