@@ -27,6 +27,7 @@
                 Información de Empleado
             </h2>
             <form method="POST" th:action="@{'/empleado/saveEmployee'}" sec:authorize="hasAnyAuthority('manager')" >
+                <input type="hidden" name="nuevo" id="nuevo" th:value="${nuevo}">
                 <input type="hidden" name="id" id="id" th:field="${employee.id}">
                 <input type="hidden" name="hireDate" id="hireDate" th:value="${employee.hireDate}" th:if="${nuevo == 0}">
                 <input type="hidden" name="hireDate" id="hireDate" th:value="${fechaActual}" th:if="${nuevo == 1}">
@@ -71,10 +72,10 @@
                                 th:value="${job.id}">-Seleccionar-</option>
                     </select>
                 </div>
-                <input type="hidden" name="salary" id="salary" th:value="${2000}" th:if="${nuevo == 1}">
+                <input type="hidden" name="salary" id="salary" th:value="${2000.00}" th:if="${nuevo == 1}">
                 <div class="form-group" th:if="${nuevo == 1}">
                     <label for="salary2">Salario</label>
-                    <input type="text" class="form-control disabled" name="salary2" id="salary2" th:value="${2000}" disabled>
+                    <input type="text" class="form-control disabled" name="salary2" id="salary2" th:value="${2000.00}" disabled>
                 </div>
                 <div class="form-group" th:if="${nuevo == 0}">
                     <label for="salary">Salario</label>
