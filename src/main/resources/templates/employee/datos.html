@@ -22,8 +22,9 @@
             </div>
         </nav>
         <div class="container">
+            <div th:if="${error != null}" th:text="${error}" class="alert alert-warning" role="alert"></div>
             <p></p>
-            <h2>
+            <h2 >
                 Información de Empleado
             </h2>
             <form method="POST" th:action="@{'/empleado/saveEmployee'}" sec:authorize="hasAnyAuthority('manager')" >
@@ -58,9 +59,10 @@
                         Please choose a username.
                     </div>
                 </div>
-                <div class="form-group">
+                    <div class="form-group">
                     <label for="departmentId">Departamento</label>
                     <select class="form-control" name="departmentId" id="departmentId" th:field="${employee.department}">
+                        <option th:if="${employee.id == null}" value="nulls" selected>-Seleccionar-</option>
                         <option th:each="department : ${listaDepartamentos}" th:text="${department.departmentName}"
                                 th:value="${department.id}">-Seleccionar-</option>
                     </select>
@@ -68,6 +70,7 @@
                 <div class="form-group">
                     <label for="jobId">Trabajo</label>
                     <select class="form-control" name="jobId" id="jobId" th:field="${employee.job}">
+                        <option th:if="${employee.id == null}" value="nulls" selected>-Seleccionar-</option>
                         <option th:each="job : ${listaTrabajos}" th:text="${job.jobTitle}"
                                 th:value="${job.id}">-Seleccionar-</option>
                     </select>

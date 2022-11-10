@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <!-- Bootstrap CSS -->
     <title>Lista de Empleados</title>
@@ -27,15 +28,25 @@
         </div>
       </nav>
       <div class="container">
-          <p><form th:action="@{/logout}" method="post"><a class="dropdown-item"><input type="submit" class="border-0" style="background: #eeeeee; background-color: #eeeeee" value="Cerrar Sesión"></a></form></p>
-        <p></p>
+          <div sec:authorize="isAuthenticated()">
+              <p ><form th:action="@{/logout}" method="post"><a class="dropdown-item"><input type="submit" class="border-0" style="background: #eeeeee; background-color: #eeeeee" value="Cerrar Sesión"></a></form></p>
+
+          </div>
+          <div sec:authorize="isAnonymous()">
+
+          <p ><form th:action="@{/logout}" method="post"><a class="dropdown-item"><input type="submit" class="border-0" style="background: #eeeeee; background-color: #eeeeee" value="Iniciar Sesión"></a></form></p>
+
+              </div>
+          <p></p>
         <div class="row">
-          <div class="col-10"><h2>Lista de Empleados</h2></div>
+          <div class="col-10"><h2>Lista de Empleados </h2></div>
           <div class="col-2 text-right" >
             <a class="btn btn-outline-info" th:href="@{'/empleado/newEmployee'}" sec:authorize="hasAnyAuthority('manager')">+ Añadir</a>
           </div>
         </div>
           <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+
+          <div sec:authorize="isAuthenticated()">
 
           <form class="input-group mb-lg-3" method="post" th:action="@{'/empleado/search'}">
               <input type="text" class="form-control" placeholder="Texto a buscar" name="searchField" th:value="${searchField}" th:if="${searchField != null}">
@@ -45,16 +56,26 @@
                   <a th:href="@{'/empleado'}" class="btn btn-outline-danger">Limpiar</a>
               </div>
           </form>
+              </div>
 
 
         <table class="table table-striped " id="myTable" >
           <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
+            <th scope="col" >#</th>
             <th scope="col">Nombre
-                <form th:action="@{/empleado/sort}" method="post">   <input class="text-reset" type="submit" th:value="${sorted}" th:name="${sorted}" >
-                    <span ></span>
-                    Sort</input></form>
+                <form th:if="${sorted == null}" th:action="@{/empleado/sort}" method="post">
+                    <a th:href="@{'/empleado'+'?sorted=asc'}" class="btn btn-light"><i class="bi bi-caret-up-fill"></i></a>
+
+
+                </form>
+
+                <form th:if="${sorted eq 'asc'}" th:action="@{/empleado/sort}" method="post">
+                    <a th:href="@{'/empleado'+'?sorted=desc'}" class="btn btn-light"><i class="bi bi-caret-down-fill"></i></a>
+
+
+                </form>
+
 
                 <a class="text-reset"  href="">
                 <span ></span>

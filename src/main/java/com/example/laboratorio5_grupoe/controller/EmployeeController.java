@@ -35,27 +35,39 @@ public class EmployeeController {
     DepartmentRepository departmentRepository;
 
     @GetMapping({"lista", ""})
-    public String listEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
+    public String listEmployee(RedirectAttributes attr,@RequestParam(name = "sorted",required = false) String sorted,Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
+
+        System.out.println(sorted);
+
+        if (Objects.equals(sorted, "asc")){
+            System.out.println("asc");
+            model.addAttribute("listaEmpleados",employeeRepository.findAll(Sort.by(Sort.Order.asc("firstName"))));
+            model.addAttribute("sorted","asc");
+        }
+
+        if (Objects.equals(sorted, "desc")){
+            System.out.println("desc");
+            model.addAttribute("listaEmpleados",employeeRepository.findAll(Sort.by(Sort.Order.desc("firstName"))));
+            model.addAttribute("sorted",null);
+        }
+        else if(sorted == null){
+            System.out.println("f");
+            model.addAttribute("listaEmpleados",employeeRepository.findAll());
+        }
 
 
-        model.addAttribute("listaEmpleados",employeeRepository.findAll());
+
+
         return "employee/list";
     }
 
     @PostMapping({"sort"})
     public String sortEmployee(Model model,@RequestParam(name = "sorted",required = false) String sorted,RedirectAttributes attr) {
-
-        if (sorted == null){
-            model.addAttribute("listaEmpleados",employeeRepository.findAll(Sort.by(Sort.Order.asc("firstName"))));
-            attr.addFlashAttribute("sorted","xd");
-        }
+        model.addAttribute("sorted",sorted);
 
 
-         if (Objects.equals(sorted, "xd")){
-            model.addAttribute("listaEmpleados",employeeRepository.findAll(Sort.by(Sort.Order.desc("firstName"))));
-        }
 
-        return "employee/list";
+        return "redirect:/empleado/lista";
     }
 
 
@@ -107,9 +119,18 @@ public class EmployeeController {
 
     //Guardar empleado
     @PostMapping ("/saveEmployee")
-    public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee,
+    public String saveEmployee(
+                                Model model, @ModelAttribute("employee") @Valid Employee employee,
                                BindingResult bindingResult, RedirectAttributes attr, @RequestParam("nuevo") int nuevo) {
-        System.out.println("########################################aqui estoy gagagagagagag");
+
+
+        if (employee.getDepartment() ==null || employee.getJob() ==null){
+            System.out.println("########################################");
+            attr.addFlashAttribute("error", "Debe seleccionar un departamento y un trabajo");
+            return "redirect:/empleado/newEmployee";
+        }
+
+        System.out.println("########################################aqui estoy gagagagagagag 2");
         if(bindingResult.hasErrors()){
             System.out.println("########################################aqui estoy gagagagagagag 2");
             System.out.println(bindingResult.getFieldError());
@@ -119,8 +140,10 @@ public class EmployeeController {
             return "/employee/datos";
         }else {
             if (employee.getId() == null) {
+
                 attr.addFlashAttribute("msg", "Empleado registrado correctamente");
             } else {
+
                 attr.addFlashAttribute("msg", "Registro del empleado actualizado");
             }
             employeeRepository.save(employee);
