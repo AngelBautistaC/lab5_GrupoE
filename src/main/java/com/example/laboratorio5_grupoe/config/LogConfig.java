@@ -24,7 +24,7 @@ public class LogConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/redirecRol",true);
 
         http.authorizeRequests()
-                .antMatchers("/empleado/info","/empleado/newEmployee","/empleado/saveEmployee").hasAuthority("1")
+                .antMatchers("/empleado/info","/empleado/newEmployee","/empleado/saveEmployee").hasAuthority("manager")
                         .anyRequest().permitAll();
 
         http.logout().logoutUrl("/logout")
