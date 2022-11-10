@@ -13,11 +13,11 @@ public class Employee {
     @Column(name = "employee_id", nullable = false)
     private Integer id;
 
-    @Size(max = 100, min = 3, message = "“El tamaño debe estar entre 3 y 100 caracteres")
+    @Size(max = 100, min = 3, message = "El tamaño debe estar entre 3 y 100 caracteres")
     @Column(name = "first_name")
     private String firstName;
 
-    @Size(max = 100, min = 3, message = "“El tamaño debe estar entre 3 y 100 caracteres")
+    @Size(max = 100, min = 3, message = "El tamaño debe estar entre 3 y 100 caracteres")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
