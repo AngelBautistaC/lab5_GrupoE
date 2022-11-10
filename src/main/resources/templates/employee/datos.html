@@ -72,10 +72,10 @@
                                 th:value="${job.id}">-Seleccionar-</option>
                     </select>
                 </div>
-                <input type="hidden" name="salary" id="salary" th:value="${2000}" th:if="${nuevo == 1}">
+                <input type="hidden" name="salary" id="salary" th:value="${2000.00}" th:if="${nuevo == 1}">
                 <div class="form-group" th:if="${nuevo == 1}">
                     <label for="salary2">Salario</label>
-                    <input type="text" class="form-control disabled" name="salary2" id="salary2" th:value="${2000}" disabled>
+                    <input type="text" class="form-control disabled" name="salary2" id="salary2" th:value="${2000.00}" disabled>
                 </div>
                 <div class="form-group" th:if="${nuevo == 0}">
                     <label for="salary">Salario</label>
