@@ -24,9 +24,8 @@ public class LogConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/redirecRol",true);
 
         http.authorizeRequests()
-                .antMatchers("/empleado/listar").hasAnyAuthority()
-                .antMatchers(("/empleado/buscar")).hasAnyAuthority("0")
-                .antMatchers("/empleado/editar","/empleado/guardar","/empleado/guardar","/empleado/buscar").hasAuthority("1");
+                .antMatchers("/empleado/info","/empleado/newEmployee","/empleado/saveEmployee").hasAuthority("1")
+                        .anyRequest().permitAll();
 
         http.logout().logoutUrl("/logout")
                 .deleteCookies("JSESSIONID")
@@ -42,8 +41,8 @@ public class LogConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery("select email, password, enabled from employees where email = ?")
-                .authoritiesByUsernameQuery("select email, password, enabled from employees where email = ?");
+                .usersByUsernameQuery("select email, password, act from employees where email = ?")
+                .authoritiesByUsernameQuery("select e.email, r.nombre from employees e inner join roles r on (r.idroles=e.enabled) where e.email = ? and e.act=\"1\"");
     }
 
 }

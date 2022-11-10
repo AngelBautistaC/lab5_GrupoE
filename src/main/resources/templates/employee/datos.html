@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
@@ -26,7 +26,7 @@
             <h2>
                 Información de Empleado
             </h2>
-            <form method="POST" th:action="@{'/empleado/saveEmployee'}" >
+            <form method="POST" th:action="@{'/empleado/saveEmployee'}" sec:authorize="hasAnyAuthority('manager')" >
                 <input type="hidden" name="id" id="id" th:field="${employee.id}">
                 <input type="hidden" name="hireDate" id="hireDate" th:value="${employee.hireDate}" th:if="${nuevo == 0}">
                 <input type="hidden" name="hireDate" id="hireDate" th:value="${fechaActual}" th:if="${nuevo == 1}">

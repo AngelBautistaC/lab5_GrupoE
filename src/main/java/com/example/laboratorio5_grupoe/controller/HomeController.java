@@ -23,7 +23,7 @@ public class HomeController {
         return "inicio";
     }
 
-    @GetMapping(value = "redirecRol")
+    @GetMapping(value = "/redirecRol")
     public String redirecRol(Authentication authentication, HttpSession session, RedirectAttributes redirectAttributes) {
         String rol = "";
         List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
@@ -31,18 +31,21 @@ public class HomeController {
             System.out.println(grantedAuthority.getAuthority());
             rol = grantedAuthority.getAuthority();
         }
+
         String username = authentication.getName();
+        System.out.println(username);
+        System.out.println(rol);
         Employee usuario = employeeRepository.findByEmail(username);
         session.setAttribute("usuario", usuario);
 
         switch (rol) {
-            case "0" -> {
+            case "manager" -> {
 
-                return "redirect:/empleado/lista";
+                return "redirect:/empleado";
 
             }
-            case "1" -> {
-                return "redirect:/empleado/lista";
+            case "empleado" -> {
+                return "redirect:/empleado";
             }
             default -> {
                 String texto = "Credenciales invalidas";
