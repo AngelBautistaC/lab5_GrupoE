@@ -27,6 +27,7 @@
                 Información de Empleado
             </h2>
             <form method="POST" th:action="@{'/empleado/saveEmployee'}" >
+                <input type="hidden" name="nuevo" id="nuevo" th:value="${nuevo}">
                 <input type="hidden" name="id" id="id" th:field="${employee.id}">
                 <input type="hidden" name="hireDate" id="hireDate" th:value="${employee.hireDate}" th:if="${nuevo == 0}">
                 <input type="hidden" name="hireDate" id="hireDate" th:value="${fechaActual}" th:if="${nuevo == 1}">

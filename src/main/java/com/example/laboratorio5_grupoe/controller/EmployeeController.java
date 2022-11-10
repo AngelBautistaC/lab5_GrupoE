@@ -108,11 +108,12 @@ public class EmployeeController {
     //Guardar empleado
     @PostMapping ("/saveEmployee")
     public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee,
-                               BindingResult bindingResult, RedirectAttributes attr) {
+                               BindingResult bindingResult, RedirectAttributes attr, @RequestParam("nuevo") int nuevo) {
         System.out.println("########################################aqui estoy gagagagagagag");
         if(bindingResult.hasErrors()){
             System.out.println("########################################aqui estoy gagagagagagag 2");
             System.out.println(bindingResult.getFieldError());
+            model.addAttribute("nuevo",nuevo);
             model.addAttribute("listaDepartamentos",departmentRepository.findAll());
             model.addAttribute("listaTrabajos",jobRepository.findAll());
             return "/employee/datos";

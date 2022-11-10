@@ -1,10 +1,7 @@
 package com.example.laboratorio5_grupoe.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -25,7 +22,7 @@ public class Employee {
     private String lastName;
 
     @Size(max = 45, message = "El correo no debe tener más de 50 caracteres")
-    @Pattern(regexp="^[\\w-\\.]+@company.com$",message="Formato incorrecto")
+    @Pattern(regexp="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",message="Formato incorrecto")
     @Column(name = "email", nullable = false, length = 25)
     private String email;
 
@@ -45,6 +42,9 @@ public class Employee {
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
+    @DecimalMax(value="8500.00", inclusive=false, message = "Salario fuera del rango permitido")
+    @DecimalMin(value="0",inclusive = false, message = "Salario fuera del rango permitido")
+    @Digits(integer=4, fraction=2, message = "Numero de decimales no permitido")
     @Column(name = "salary", precision = 8, scale = 2)
     private BigDecimal salary;
 
