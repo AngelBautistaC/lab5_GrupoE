@@ -41,9 +41,6 @@ public class Employee {
     @Column(name = "hire_date", nullable = false)
     private String hireDate;
 
-    @NotNull
-    @NotNull
-    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
@@ -58,8 +55,6 @@ public class Employee {
     @JoinColumn(name = "manager_id")
     private Employee manager;
 
-    @NotNull
-    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
